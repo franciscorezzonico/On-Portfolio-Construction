@@ -36,5 +36,18 @@ for ticker in euronxt_symbols:
 data_def = pd.concat(historical_data.values(), keys=euronxt_symbols, axis=1)
 
 # Export the dataframe as an Excel file.
-path = path + '/dataset.xlsx'
+path_stock_data = path + '/dataset.xlsx'
 data_def.to_excel(path, index=True)
+
+# CREATE AN EXCEL FILE WITH DAILY DATA OF EURONEXT 100 INDEX
+# Download data from Yahoo Finance.
+euronxt_100 = yf.download('^N100', start='2024-01-31', end='2024-03-01',
+                          interval='1d')
+euronxt_100 = euronxt_100['Adj Close']
+
+# Create a DataFrame.
+euronxt_100_data = pd.DataFrame(euronxt_100)
+
+# Export the dataframe as an Excel file.
+path_index_data = path + '/euronxt_100_data.xlsx'
+euronxt_100_data.to_excel(path_index_data, index=True)
